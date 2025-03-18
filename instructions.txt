@@ -1,0 +1,63 @@
+4.1 Task 1 : Mininet Test (15 Marks)
+1. Verify if the controller act as a HUB and broadcast the Ethernet frames. To do so, ping the node vic
+from the node leg by typing “ping ip address of node vic” in node leg’s terminal (ip address of node vic
+is to be replaced by the IP address of node vic), check if the ICMP packet can be sniffed by the Wireshark running on the node att. Save a screenshot of the output of the ping command in the node
+leg’s terminal and a screenshot of Wireshark of the above ICMP packet. (5 marks)
+Note that you can find out the IP address of each nodes by running the command ifconfig on the
+corresponding terminal as shown in the figure below.
+
+. To verify if necessary services are started properly, use the netstat -a command, and among the
+outputs from the command, check for TCP sockets that listen to ssh and telnet ports. Save a
+screenshot of the output in the terminal. (5 marks)
+More information on “netstat” can be found by typing “man netstat” in the terminal.
+
+
+Test the availability of a web service through the node leg by wget:
+Test the HTTP server
+# wget 10.0.0.3
+Save a screenshot of the output in the terminal. (5 marks)
+
+
+4.2 Task 2 : SYN Flooding Attack (20 Marks)
+SYN flood is a form of DoS attack in which attackers send many SYN requests to a victim’s TCP port, but
+the attackers have no intention to finish the 3-way handshake procedure. Attackers either use spoofed IP
+address or do not continue the procedure. Through this attack, attackers can flood the victim’s queue that is
+used for half-opened connections, i.e. the connections that has finished SYN, SYN-ACK, but has not yet got
+a final ACK back. When this queue is full, the victim cannot take any more connection. Figure 2 illustrates
+the attack.
+Netwox Tools. Netwox is a useful tool to send out network packets of different types and with different
+contents.
+It consists of a suite of tools, each having a specific number. You can run the command like the following
+(the parameters depend on which tool you are using). For some of the tools, you have to run it with the root
+privilege:
+# netwox number [parameters ... ]
+If you are not sure how to set the parameters, you can look at the manual by issuing "netwox number
+--help2".
+Use netwox tool with appropriate parameters to conduct this attack from att to vic on HTTP (port
+80). The corresponding Netwox tool for this task is numbered 76. Here is a simple help screen for this tool.
+You can also type "netwox 76 --help2" to get the help information.
+
+
+Note. It is better to run netwox 76 command for a short time and stop it by Ctrl+C quickly, otherwise
+the disk will be full for very short time. The other option is to disable Wireshark capturing at the beginning.
+Run this attack and report the following items:
+1. The netwox command and its arguments used for this attack (5 marks)
+2. Output of command "netstat -na" on node vic, which checks the usage of the queue, i.e.,
+the number of half-opened connections associated with a listening port. The state for such connections are SYN-RECV. If the 3-way handshake was finished, the state of the connections would be
+ESTABLISHED. (5 marks)
+3. Include a snapshot of SYN packets sniffed by Wireshark. What can be seen about their source IP
+addresses? (5 marks)
+4. Send a HTTP request (e.g., wget command) from leg to vic and trace the request via Wireshark.
+Could the node leg get any HTTP response from the server node vic during the attack? If yes, how long does it take? (5 marks)
+
+
+
+Additionally, you should describe how you determine whether the attack is successful or not, e.g., by providing evidences from command outputs and your observations in ONE paragraph. (5 marks)
+Hint: You can prepare your report inside the virtual machine using libreOffice Writer and export it directly to pdf by the following icon. Alternatively, you can transfer all screenshots to your native OS
+using the methods mentioned in the tricks at the end of Section 3
+
+Also an easy way for taking screenshots in Ubuntu is to use shift + PrintScrn and select the
+desired area.
+Submit your report as a single pdf file to the “Assignment 4” folder on the Avenue.
+DO NOT RUN NETWOX TO HOSTS
+OUTSIDE YOUR VM!
